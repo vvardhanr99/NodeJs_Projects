@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>
+            Signin From
+        </title>
+        <style>
+            .container{
+                width:50%;
+                height:50%;
+                border: 1px solid;
+                margin: auto;
+            }
+            form{
+                padding:5px;
+                margin:50px auto;
+            }
+            #name,#password,p,#btn,#afterSubmit{
+                position: relative;
+                top:20%;
+                left:30%;
+                padding:10px;
+                width:40%;
+                margin: 10px;
+                outline: none;
+            }
+            h1{
+                text-align: center;
+            }
+            #btn{
+                background-color: blue;
+                color: #fff;
+                cursor: pointer;
+            }
+            #btn:hover{
+                background-color: lightblue;
+            }
+        </style>
+        <body>
+            <form action="" id="reg-form">
+                <h1>Signin Form</h1>
+                <div class="container">
+                    <input type="text" autocomplete="off" placeholder="Username" id="name" required ><br>
+                    <input type="password" placeholder="Password" id="password" required><br>
+                    <input type="submit" value="Submit" id="btn">
+                    <p>New user <a href="/register.html">Click Here</a></p>
+                    <h4 id="afterSubmit"></h4>
+                </div>
+            </form>
+            <script>
+                const form = document.getElementById('reg-form')
+                form.addEventListener('submit',registerUser)
+
+                async function registerUser(event){
+                    event.preventDefault()
+                    var name = document.getElementById('name').value
+                    var password = document.getElementById('password').value
+                        const result = await fetch('/api/login',{
+                        method:'Post',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body:JSON.stringify({
+                            name,
+                            password,
+                        })
+                    
+                    }).then((res)=>res.json).catch((err)=>{
+                        document.getElementById('afterSubmit').innerHTML="Failed to Login"
+                    })
+                    
+                }
+                
+                
+            </script>
+    </body>
+</html>

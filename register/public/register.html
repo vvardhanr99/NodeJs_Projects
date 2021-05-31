@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Reigister Form</title>
+    </head>
+    <style>
+        .container{
+            padding: 10px;
+            width:50%;
+            height:50%;
+            border: 1px solid;
+            margin: auto;
+        }
+        form{
+            padding:5px;
+            margin:50px auto;
+        }
+        #name,#password,#email,#btn,#afterSubmit{
+            position: relative;
+            top:20%;
+            left:30%;
+            padding:10px;
+            width:40%;
+            margin: 10px;
+            outline: none;
+        }
+        h1{
+            text-align: center;
+        }
+        #btn{
+            background-color: blue;
+            color: #fff;
+            cursor: pointer;
+        }
+        #btn:hover{
+            background-color: lightblue;
+        }
+    </style>
+    <body>
+        <form action="" id="reg-form">
+            <h1>Reigister Form</h1>
+            <div class="container">
+                <input type="text" autocomplete="off" placeholder="Username" id="name" required ><br>
+                <input type="password" placeholder="Password" id="password" required><br>
+                <input type="email" placeholder="Email" id="email" required><br>
+                <input type="submit" value="Submit" id="btn">
+                <h4 id="afterSubmit"></h4>
+            </div>
+        </form>
+        <script>
+            const form = document.getElementById('reg-form')
+            form.addEventListener('submit', registerUser)
+            async function registerUser (event){
+                event.preventDefault()
+                const name = document.getElementById('name').value
+                const password = document.getElementById('password').value
+                const email = document.getElementById('email').value
+                const result = await fetch('/api/register',{
+                    method:'Post',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        name,
+                        password,
+                        email
+                    })
+                   
+                }).then((res)=>res.json())
+                //.log(result)
+            }
+        </script>
+    </body>
+</html>
